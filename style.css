@@ -1,0 +1,136 @@
+#particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: #000;
+    overflow: hidden;
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(30, 0, 0, 0.4) 0%, #000 100%);
+}
+
+.container {
+  display: flex;
+  align-items: flex-start;
+  width: 80%;
+  margin: 1.5rem auto 0;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  overflow: hidden;
+  padding-left: 0;
+  padding-right: 2rem;
+  box-sizing: border-box;
+  gap: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+
+.container.red-theme {
+  border: 2px solid #ff2222;
+  color: #ec0f0f;
+  text-shadow: 1px 1px 2px #800000, -1px -1px 2px #570000, 2px 2px 4px #380000;
+}
+
+.container.red-theme .image-wrapper img {
+  border: 1px solid #ff2222;
+  box-shadow: 0 0 10px rgba(255, 34, 34, 0.7);
+}
+
+.container.blue-theme {
+  border: 2px solid #2222ff;
+  color: #0f0fec;
+  text-shadow: 1px 1px 2px #000080, -1px -1px 2px #000057, 2px 2px 4px #000038;
+}
+
+.container.blue-theme .image-wrapper img {
+  border: 1px solid #2222ff;
+  box-shadow: 0 0 10px rgba(34, 34, 255, 0.7);
+}
+
+.image-wrapper {
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0.5rem;
+  box-sizing: border-box;
+}
+
+.image-wrapper img {
+  display: block;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex: 1;
+  max-width: calc(100% - 200px - 2rem - 1rem);
+  padding-left: 0;
+  padding-top: 1.5rem;
+  text-align: center;
+}
+
+.content h1 {
+  margin: 0 0 0.5rem 0;
+  font-weight: bold;
+  font-size: 2.3rem;
+  text-align: center;
+}
+
+.content p {
+  margin: 0 auto;
+  max-width: 600px;
+  text-align: center;
+  font-size: 1.3rem;
+  line-height: 1.4;
+}
+
+@media (max-width: 600px) {
+  .container {
+    flex-direction: column;
+    width: 90%;
+    padding: 1.5rem 1rem;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .image-wrapper img {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+  }
+
+  .content {
+    max-width: 100%;
+    padding-left: 0;
+    padding-top: 0;
+  }
+
+  .content h1,
+  .content p {
+    text-align: center;
+  }
+}
