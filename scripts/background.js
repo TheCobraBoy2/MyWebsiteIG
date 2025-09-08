@@ -3,6 +3,8 @@ const ctx = canvas.getContext('2d');
 
 const PARTICLE_COUNT = 30;
 
+const container = document.querySelector('.container');
+
 const CONFIG = {
   RADIUS_MIN: 2,
   RADIUS_RANGE: 3,
@@ -17,11 +19,19 @@ const CONFIG = {
   ALPHA_CHANGE_RATE: 0.015,
   ALPHA_LOWER_BOUND: 0.1,
 
-  HUE_BASE: 350,
-  HUE_RANGE: 10,
-
   SHADOW_BLUR: 20,
-  FADE_START_FACTOR: 0.85
+  FADE_START_FACTOR: 0.85,
+
+  THEMES: {
+    red: {
+      HUE_BASE: 350,
+      HUE_RANGE: 10
+    },
+    blue: {
+      HUE_BASE: 230,
+      HUE_RANGE: 10
+    }
+  }
 };
 
 let particles = [];
@@ -37,6 +47,17 @@ function randomBetween(min, range) {
   return Math.random() * range + min;
 }
 
+function getCurrentTheme() {
+  if (container.classList.contains('blue-theme')) return 'blue';
+  return 'red'; // default
+}
+
+function getThemeHue() {
+  const theme = getCurrentTheme();
+  const { HUE_BASE, HUE_RANGE } = CONFIG.THEMES[theme];
+  return randomBetween(HUE_BASE, HUE_RANGE);
+}
+
 function resetParticle(p) {
   p.x = Math.random() * canvas.width;
   p.y = -p.r;
@@ -44,7 +65,7 @@ function resetParticle(p) {
   p.dx = (Math.random() - 0.5) * CONFIG.DX_RANGE;
   p.dy = randomBetween(CONFIG.DY_MIN, CONFIG.DY_RANGE);
   p.alpha = randomBetween(CONFIG.ALPHA_INITIAL_MIN, CONFIG.ALPHA_INITIAL_RANGE);
-  p.hue = randomBetween(CONFIG.HUE_BASE, CONFIG.HUE_RANGE);
+  p.hue = getThemeHue();
 }
 
 function createParticles() {
@@ -57,10 +78,18 @@ function createParticles() {
       dx: (Math.random() - 0.5) * CONFIG.DX_RANGE,
       dy: randomBetween(CONFIG.DY_MIN, CONFIG.DY_RANGE),
       alpha: randomBetween(CONFIG.ALPHA_INITIAL_MIN, CONFIG.ALPHA_INITIAL_RANGE),
-      hue: randomBetween(CONFIG.HUE_BASE, CONFIG.HUE_RANGE)
+      hue: getThemeHue()
     };
   });
 }
+
+function updateParticleColors() {
+  for (const p of particles) {
+    p.hue = getThemeHue();
+  }
+}
+
+window.updateParticleColors = updateParticleColors;
 
 function updateAndDrawParticles() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
